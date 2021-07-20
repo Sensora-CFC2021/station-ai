@@ -1,5 +1,0 @@
-WATER_CROPS = 'Water your crops'
-DONT_WATER = 'Do not water your crops'
-WATER_CROPS_LESS = 'Water your crops less than the recommended value'
-WATER_CROPS_MORE = 'Water your crops more than the recommended value'
-DEFAULT_WATER_CROPS = 'Water your crops today '

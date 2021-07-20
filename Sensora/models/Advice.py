@@ -1,5 +1,5 @@
 class WaterAdvice:
-    def __init__(self, water_recommended, stage, crop_id, crop_name, soil_moisture_reading):
+    def __init__(self, water_recommended=None, stage=None, crop_id=None, crop_name=None, soil_moisture_reading=None):
         self.water_recommended = water_recommended
         self.stage = stage
         self.id = crop_id

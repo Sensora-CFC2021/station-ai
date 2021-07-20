@@ -1,0 +1,18 @@
+{
+  "mn": {
+    "WATER_CROPS": "Ургацаа услаарай",
+    "DONT_WATER": "Ургацаа битгий услаарай",
+    "WATER_CROPS_LESS": "Ургацаа санал болгосон хэмжээнээс бага услаарай",
+    "WATER_CROPS_MORE": "Ургацаа санал болгосон хэмжээнээс их услаарай",
+    "DEFAULT_WATER_CROPS": "Ургацаа өнөөдөр услаарай"
+  },
+
+  "en": {
+    "WATER_CROPS": "Water your crops",
+    "DONT_WATER": "Do not water your crops",
+    "WATER_CROPS_LESS": "Water your crops less than the recommended value",
+    "WATER_CROPS_MORE": "Water your crops more than the recommended value",
+    "DEFAULT_WATER_CROPS": "Water your crops today"
+  }
+}
+
