@@ -1,6 +1,6 @@
 from models import SoilMoisture, Advice
 from utilities import DateTimeUtil
-from WeatherDataService import is_raining, determine_rain_index, determine_temperature_index
+from .WeatherDataService import is_raining, determine_rain_index, determine_temperature_index
 
 
 def create_water_advice(weather_info, crop_info, soil_moisture):

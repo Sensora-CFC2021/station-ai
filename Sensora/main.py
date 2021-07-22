@@ -15,11 +15,9 @@ def sensora(soil_moisture_percentage, language, crop_information):
     # --------------------------- TRANSLATION VARIABLES ---------------------------
     variables = Translation.translated_advice(language)
 
-
     # --------------------------- SOIL MOISTURE, SOIL MOISTURE INDEX ---------------------------
     soil_moisture = SoilMoistureService.get_soil_moisture_reading(soil_moisture_percentage)
     soil_moisture_index = soil_moisture.soil_moisture_index
-
 
     # --------------------------- CONVERTING CROP INFORMATION ---------------------------
     crop_name = crop_information[0]
@@ -33,17 +31,16 @@ def sensora(soil_moisture_percentage, language, crop_information):
     crop_stage = Crop.Stage(stage_number, stage, water_use)
     crop_info = SelectedCrop.SelectedCrop(crop_name, crop_id, crop_stage)
 
-
     # --------------------------- FORMING WEATHER INFORMATION ---------------------------
-    weather_data = None # instance of Weather Response
-    weather_info = WeatherDataService.create_today_weather(weather_data)
+    print("WeatherDataService")
+    weather_api =  WeatherDataService()
+    weather_info = weather_api.create_today_weather()
 
     precip = weather_info.precip_chance
     rain_index = WeatherDataService.determine_rain_index(precip)
 
     temperature = weather_info.temperature
     temperature_index = WeatherDataService.determine_temperature_index(temperature)
-
 
     # --------------------------- FINAL CALCULATION ---------------------------
     advice = WaterAdviceService.create_water_advice(weather_info, crop_info, soil_moisture)
@@ -53,4 +50,6 @@ def sensora(soil_moisture_percentage, language, crop_information):
     return advice
 
 
-# print(sensora(90, "en", ("corn", 4)))
+
+
+print(sensora(90, "en", ("corn", 4)))
