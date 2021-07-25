@@ -15,3 +15,6 @@ def get_soil_moisture_reading(value_percentage):
         soil_moisture.soil_moisture_index = "HIGH"
 
     return soil_moisture
+
+
+# print(get_soil_moisture_reading(30)) # testing

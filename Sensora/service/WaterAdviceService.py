@@ -1,15 +1,13 @@
 from models import SoilMoisture, Advice
 from utilities import DateTimeUtil
-from .WeatherDataService import is_raining, determine_rain_index, determine_temperature_index
+from service import WeatherDataService
 
 
 def create_water_advice(weather_info, crop_info, soil_moisture):
     soil_moisture = SoilMoisture.SoilMoisture(soil_moisture.soil_moisture_percentage, soil_moisture.soil_moisture_index)
     water_advice = Advice.WaterAdvice(crop_info.stage.water_use, crop_info.stage.stage, crop_info.id,
                                       crop_info.crop_name, soil_moisture)
-
-    date_time_util = DateTimeUtil.DateTimeUtil()  # to change
-    is_day_time = date_time_util.is_day_time(weather_info.sunrise_time, weather_info.sunset_time)
+    is_day_time = DateTimeUtil.is_day_time(weather_info.sunrise_time, weather_info.sunset_time)
 
     if is_day_time:
         water_advice.temperature = weather_info.day_time.temperature
@@ -24,12 +22,12 @@ def create_water_advice(weather_info, crop_info, soil_moisture):
 
 
 def generate_water_advice(weather_info, soil_moisture_index):
-    if is_raining(weather_info):
-        rain_index = determine_rain_index(weather_info.precip_chance)
+    if WeatherDataService.is_raining(weather_info):
+        rain_index = WeatherDataService.determine_rain_index(weather_info.precip_chance)
         return determine_rainy_day_advice(rain_index, soil_moisture_index)
 
     else:
-        temperature_index = determine_temperature_index(weather_info.temperature)
+        temperature_index = WeatherDataService.determine_temperature_index(weather_info.temperature)
         return determine_non_rainy_day_advice(soil_moisture_index, temperature_index)
 
 
@@ -85,3 +83,7 @@ def determine_non_rainy_day_advice(soil_moisture_index, temperature_index):
         return "WATER_CROPS_LESS"
     else:
         return "DEFAULT_WATER_CROPS"
+
+
+# print(determine_rainy_day_advice("LOW", "HIGH")) - testing
+# print(determine_non_rainy_day_advice("LOW", "HIGH")) - testing

@@ -1,15 +1,15 @@
 from translation import Translation
 from service import SoilMoistureService, WeatherDataService, WaterAdviceService
 from crop import CropInfo
-from models import SelectedCrop, Crop, WeatherResponse
+from models import SelectedCrop, Crop
 
 
-def sensora(soil_moisture_percentage, language, crop_information):
+def sensora(soil_moisture_percentage, language, crop_information, coordinates):
     """
     soil_moisture_percentage: number - integer/float,
     language: string - "en" / "mn"
     crop_information: tuple containing the crop type and its growth stage
-    irrigation_night: boolean indicating when to water the crops - True, if watering the crops through the day, False, otherwise
+    coordinates: tuple of latitude and longitude
     """
 
     # --------------------------- TRANSLATION VARIABLES ---------------------------
@@ -17,7 +17,6 @@ def sensora(soil_moisture_percentage, language, crop_information):
 
     # --------------------------- SOIL MOISTURE, SOIL MOISTURE INDEX ---------------------------
     soil_moisture = SoilMoistureService.get_soil_moisture_reading(soil_moisture_percentage)
-    soil_moisture_index = soil_moisture.soil_moisture_index
 
     # --------------------------- CONVERTING CROP INFORMATION ---------------------------
     crop_name = crop_information[0]
@@ -32,15 +31,9 @@ def sensora(soil_moisture_percentage, language, crop_information):
     crop_info = SelectedCrop.SelectedCrop(crop_name, crop_id, crop_stage)
 
     # --------------------------- FORMING WEATHER INFORMATION ---------------------------
-    print("WeatherDataService")
-    weather_api =  WeatherDataService()
-    weather_info = weather_api.create_today_weather()
-
-    precip = weather_info.precip_chance
-    rain_index = WeatherDataService.determine_rain_index(precip)
-
-    temperature = weather_info.temperature
-    temperature_index = WeatherDataService.determine_temperature_index(temperature)
+    lat, lon = coordinates
+    weather_data = WeatherDataService.get_today_weather_data(lat, lon, language)
+    weather_info = WeatherDataService.create_today_weather(weather_data)
 
     # --------------------------- FINAL CALCULATION ---------------------------
     advice = WaterAdviceService.create_water_advice(weather_info, crop_info, soil_moisture)
@@ -50,6 +43,4 @@ def sensora(soil_moisture_percentage, language, crop_information):
     return advice
 
 
-
-
-print(sensora(90, "en", ("corn", 4)))
+print(sensora(90, "mn", ("corn", 4), (43.324, 123.43)))
