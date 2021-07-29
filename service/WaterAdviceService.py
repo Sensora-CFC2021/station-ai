@@ -5,7 +5,7 @@ from service import WeatherDataService
 
 def create_water_advice(weather_info, crop_info, soil_moisture):
     soil_moisture = SoilMoisture.SoilMoisture(soil_moisture.soil_moisture_percentage, soil_moisture.soil_moisture_index)
-    water_advice = Advice.WaterAdvice(crop_info.stage.water_use, crop_info.stage.stage, crop_info.id,
+    water_advice = Advice.WaterAdvice(crop_info.stage.water_use, crop_info.stage.stage, crop_info.crop_id,
                                       crop_info.crop_name, soil_moisture)
     is_day_time = DateTimeUtil.is_day_time(weather_info.sunrise_time, weather_info.sunset_time)
 
@@ -22,6 +22,7 @@ def create_water_advice(weather_info, crop_info, soil_moisture):
 
 
 def generate_water_advice(weather_info, soil_moisture_index):
+
     if WeatherDataService.is_raining(weather_info):
         rain_index = WeatherDataService.determine_rain_index(weather_info.precip_chance)
         return determine_rainy_day_advice(rain_index, soil_moisture_index)

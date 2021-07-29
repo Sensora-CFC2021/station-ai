@@ -2,6 +2,8 @@ from translation import Translation
 from service import SoilMoistureService, WeatherDataService, WaterAdviceService
 from crop import CropInfo
 from models import SelectedCrop, Crop
+from textToSpeech import Watson, SpeechAdvice
+from playsound import playsound
 
 
 def sensora(soil_moisture_percentage, language, crop_information, coordinates):
@@ -36,11 +38,15 @@ def sensora(soil_moisture_percentage, language, crop_information, coordinates):
     weather_info = WeatherDataService.create_today_weather(weather_data)
 
     # --------------------------- FINAL CALCULATION ---------------------------
-    advice = WaterAdviceService.create_water_advice(weather_info, crop_info, soil_moisture)
-    final_decision = advice.watering_decision
-    advice.watering_decision = variables[final_decision]
+    water_advice = WaterAdviceService.create_water_advice(weather_info, crop_info, soil_moisture)
+    final_decision = water_advice.watering_decision
+    water_advice.watering_decision = variables[final_decision]
 
-    return advice
+    speech = SpeechAdvice.speech_advice(language, soil_moisture.soil_moisture_percentage, water_advice.temperature,
+                                        water_advice)
+    Watson.text2speech(speech)
+    playsound("test.mp3", True)
+    return Translation.translated_final_advice(language, water_advice)
 
 
-print(sensora(90, "mn", ("corn", 4), (43.324, 123.43)))
+sensora(50, "en", ("corn", 2), (43.324, 123.43))

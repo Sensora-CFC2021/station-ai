@@ -1,0 +1,18 @@
+{
+  "mn": {
+    "CROP_NAME": "Ургацын нэр:",
+    "STAGE": "Ургацын хөгжлийн үе шат:",
+    "RECOMMENDED_WATER_USE": "Уславал зохих хэмжээ:",
+    "IRRIGATION ADVICE": "Услагааны зөвлөгөө:",
+    "UNIT": "cm"
+  },
+
+  "en": {
+    "CROP_NAME": "Crop name:",
+    "STAGE": "Development stage:",
+    "RECOMMENDED_WATER_USE": "Recommended water usage:",
+    "IRRIGATION ADVICE": "Irrigation advice:",
+    "UNIT": "sm"
+  }
+}
+
