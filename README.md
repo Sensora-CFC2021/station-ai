@@ -1,4 +1,3 @@
-# Sensora
 
 <img src="icon.png" />
 
